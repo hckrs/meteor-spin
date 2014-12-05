@@ -41,7 +41,7 @@ Template.spin.rendered = function() {
     , size   = radius * 2 + 5
     , elm    = this.firstNode
     , $elm   = this.$(elm);
-console.log(opts)
+
   // make spinner
   this.spinner = new Spinner(opts);
   this.spinner.spin(elm);
