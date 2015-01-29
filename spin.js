@@ -29,14 +29,15 @@ Spin.size = {
 
 
 Template.spin.rendered = function() {
-  var opts   = _.extend({}, 
-                 Spin.preset['default'] || {}, 
-                 Spin.default || {},
-                 Spin.preset[this.data.preset] || {},
-                 Spin.size[this.data.size] || {},
-                 this.data.options, 
-                 this.data 
-               )
+  var data = this.data || {}
+    , opts = _.extend({},
+               Spin.preset['default'] || {},
+               Spin.default || {},
+               Spin.preset[data.preset] || {},
+               Spin.size[data.size] || {},
+               data.options,
+               data
+             )
     , radius = opts.radius + opts.length
     , size   = radius * 2 + 5
     , elm    = this.firstNode
@@ -58,5 +59,5 @@ Template.spin.rendered = function() {
 }
 
 Template.spin.destroyed = function() {
-  this.spinner && this.spinner.stop(); 
+  this.spinner && this.spinner.stop();
 }
