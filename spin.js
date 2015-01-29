@@ -1,3 +1,5 @@
+"use strict";
+
 Spin = {};
 
 Spin.preset = {
@@ -17,26 +19,27 @@ Spin.preset = {
     className: 'spinner', // The CSS class to assign to the spinner
     zIndex: 2e9, // The z-index (defaults to 2000000000)
     left: 0,
-    top: 0,
+    top: 0
   }
 };
 
 Spin.size = {
   xs: {radius: 3, length: 4, width: 1},
   sm: {radius: 7, length: 7},
-  lg: {radius: 18, length: 15},
+  lg: {radius: 18, length: 15}
 };
 
 
-Template.spin.rendered = function() {
-  var opts   = _.extend({}, 
-                 Spin.preset['default'] || {}, 
-                 Spin.default || {},
-                 Spin.preset[this.data.preset] || {},
-                 Spin.size[this.data.size] || {},
-                 this.data.options, 
-                 this.data 
-               )
+Template.spin.rendered = function spin_rendered() {
+  var data = this.data || {}
+    , opts = _.extend({},
+               Spin.preset['default'] || {},
+               Spin.default || {},
+               Spin.preset[data.preset] || {},
+               Spin.size[data.size] || {},
+               data.options,
+               data
+             )
     , radius = opts.radius + opts.length
     , size   = radius * 2 + 5
     , elm    = this.firstNode
@@ -49,14 +52,15 @@ Template.spin.rendered = function() {
   // positioning
   $elm.css({
     'width': size,
-    'height': size,
+    'height': size
   });
   $elm.find('.spinner').css({
     'left': radius,
-    'top': radius,
+    'top': radius
   });
-}
+};
 
-Template.spin.destroyed = function() {
-  this.spinner && this.spinner.stop(); 
-}
+Template.spin.destroyed = function spin_destroyed() {
+  this.spinner && this.spinner.stop();
+  this.spinner = null;
+};
